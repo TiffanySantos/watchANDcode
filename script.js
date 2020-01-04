@@ -71,7 +71,8 @@ var todoList = {
     displayTodos: function() {
       var todosUl = document.querySelector('ul'); 
       todosUl.innerHTML = '';
-
+// callback function isn't just passed the todo item in the array it is also passed in its position
+//forEach REQUIRES both a variable and the object property which is being iterated over (in this case the array position beacause the todoList array is the object)
       todoList.todos.forEach(function(todo, position){
        var todoLi = document.createElement('li');
        var todoTextWithCompletion = '';
@@ -86,7 +87,7 @@ var todoList = {
         todoLi.textContent = todoTextWithCompletion;
         todoLi.appendChild(this.createDeleteButton());
         todosUl.appendChild(todoLi);
-    }, this); //this is being used in the foreach callbck function so that it is poiting to the view object, not the window because it is not a method on the view object
+    }, this); //this here is being used in the foreach callback function so that it is poiting to the view object, because it is not a method on the view object
     },
     createDeleteButton: function() { 
       var deleteButton = document.createElement('button'); // variable that inserts the button onto the DOM
