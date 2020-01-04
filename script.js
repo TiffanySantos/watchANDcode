@@ -21,23 +21,18 @@ var todoList = {
     toggleAll: function() {
       var totalTodos = this.todos.length; // to get all todos get the array length
       var completedTodos = 0; //start loop by setting start value to check against 
-      // Get number of completed todos.
-      for (var i = 0; i < totalTodos; i++) {
-        if (this.todos[i].completed === true) {
-          completedTodos++;
+      this.todos.forEach(function(todo) { //forEach callback function being used in toggle all higher order function
+          if (todo.completed === true) {
+            completedTodos++;
+          }
+        });
+      this.todos.forEach(function(todo){
+        if (completedTodos === totalTodos) {
+          todo.completed = false;
+        } else {
+          todo.completed = true;
         }
-      }
-      // Case 1: If everything’s true, make everything false.
-      if (completedTodos === totalTodos) {
-        for (var i = 0; i < totalTodos; i++) {
-          this.todos[i].completed = false;
-        }
-      // Case 2: Otherwise, make everything true.
-      } else {
-        for (var i = 0; i < totalTodos; i++) {
-          this.todos[i].completed = true;
-        }      
-      }
+      });
     }
   };
   // DOM handling events object
@@ -74,23 +69,24 @@ var todoList = {
   // rendering todoList items object
   var view = {
     displayTodos: function() {
-      var todosUl = document.querySelector('ul');
+      var todosUl = document.querySelector('ul'); 
       todosUl.innerHTML = '';
-      for (var i = 0; i < todoList.todos.length; i++) {
-        var todoLi = document.createElement('li');
-        var todo = todoList.todos[i];
-        var todoTextWithCompletion = '';
-  
-        if (todo.completed === true) {
-          todoTextWithCompletion = '(x) ' + todo.todoText;
-        } else {
-          todoTextWithCompletion = '( ) ' + todo.todoText;
-        }
-        todoLi.id = i;
+
+      todoList.todos.forEach(function(todo, position){
+       var todoLi = document.createElement('li');
+       var todoTextWithCompletion = '';
+        
+       if (todo.completed === true) {
+              todoTextWithCompletion = '(x) ' + todo.todoText;
+            } else {
+              todoTextWithCompletion = '( ) ' + todo.todoText;
+            }
+        
+        todoLi.id = position;
         todoLi.textContent = todoTextWithCompletion;
         todoLi.appendChild(this.createDeleteButton());
         todosUl.appendChild(todoLi);
-      }  
+    }, this); //this is being used in the foreach callbck function so that it is poiting to the view object, not the window because it is not a method on the view object
     },
     createDeleteButton: function() { 
       var deleteButton = document.createElement('button'); // variable that inserts the button onto the DOM
