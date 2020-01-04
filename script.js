@@ -1,35 +1,32 @@
 
 // a todo list array with related methods on the object, it's the list and how you change it
-
 var todoList = {
-    todos: [],
+    todos: [], //empty array which is out todoList
     addTodo: function(todoText) {
-      this.todos.push({
-        todoText: todoText,
-        completed: false
+      this.todos.push({ //push new list item into list array
+        todoText: todoText, //list item text property
+        completed: false //completed property default set to false
       });
     },
-    changeTodo: function(position, todoText) {
+    changeTodo: function(position, todoText) { //to change take the indext postion in the array and change the text property
       this.todos[position].todoText = todoText;
     },
-    deleteTodo: function(position) {
+    deleteTodo: function(position) { //to delete splice the array by chosing start postion of splice and how many to cut out (in this case only one)
       this.todos.splice(position, 1);
     },
-    toggleCompleted: function(position) {
-      var todo = this.todos[position];
-      todo.completed = !todo.completed;
+    toggleCompleted: function(position) { //to toggle completed modify the completed boolean propety value
+      var todo = this.todos[position]; // index position of the list item to be toggled
+      todo.completed = !todo.completed; //switch statement if completed then set to not and vise versa
     },
     toggleAll: function() {
-      var totalTodos = this.todos.length;
-      var completedTodos = 0;
-      
+      var totalTodos = this.todos.length; // to get all todos get the array length
+      var completedTodos = 0; //start loop by setting start value to check against 
       // Get number of completed todos.
       for (var i = 0; i < totalTodos; i++) {
         if (this.todos[i].completed === true) {
           completedTodos++;
         }
       }
-      
       // Case 1: If everything’s true, make everything false.
       if (completedTodos === totalTodos) {
         for (var i = 0; i < totalTodos; i++) {
@@ -43,7 +40,7 @@ var todoList = {
       }
     }
   };
-  
+  // DOM handling events object
   var handlers = {
     addTodo: function() {
       var addTodoTextInput = document.getElementById('addTodoTextInput');
@@ -76,7 +73,7 @@ var todoList = {
       view.displayTodos();
     }  
   };
-  
+  // rendering todoList items object
   var view = {
     displayTodos: function() {
       var todosUl = document.querySelector('ul');
@@ -91,10 +88,16 @@ var todoList = {
         } else {
           todoTextWithCompletion = '( ) ' + todo.todoText;
         }
-        
         todoLi.textContent = todoTextWithCompletion;
+        todoLi.appendChild(this.createDeleteButton());
         todosUl.appendChild(todoLi);
       }  
+    },
+    createDeleteButton: function () { 
+      var deleteButton = document.createElement('button)'); // variable that inserts the button onto the DOM
+      deleteButton.textContent = ('Delete'); //text that appears on the button
+      deleteButton.className = "deleteButton";
+      return deleteButton
     }
   };
   
