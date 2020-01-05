@@ -66,42 +66,39 @@ var todoList = {
       view.displayTodos();
     }  
   };
-  // rendering todoList items object
+  // rendering todoList items object (updting the screen when changes to the todoList have been made)
   var view = {
     displayTodos: function() {
-      var todosUl = document.querySelector('ul'); 
+      var todosUl = document.querySelector('ul'); // the DOM querySelctor returns the first match (of null if not found) here we are selecting any UL element
       todosUl.innerHTML = '';
 // callback function isn't just passed the todo item in the array it is also passed in its position
 //forEach REQUIRES both a variable and the object property which is being iterated over (in this case the array position beacause the todoList array is the object)
       todoList.todos.forEach(function(todo, position){
-       var todoLi = document.createElement('li');
-       var todoTextWithCompletion = '';
-        
-       if (todo.completed === true) {
+       var todoLi = document.createElement('li'); // here we are selecting any Li elements from the DOM
+       var todoTextWithCompletion = '';       
+       if (todo.completed === true) { // for each todoList item concatenate an x for completion or not dpending on the boolean completed property value
               todoTextWithCompletion = '(x) ' + todo.todoText;
             } else {
               todoTextWithCompletion = '( ) ' + todo.todoText;
             }
-        
-        todoLi.id = position;
-        todoLi.textContent = todoTextWithCompletion;
-        todoLi.appendChild(this.createDeleteButton());
-        todosUl.appendChild(todoLi);
-    }, this); //this here is being used in the foreach callback function so that it is poiting to the view object, because it is not a method on the view object
+        todoLi.id = position; //access the todo list item id(its array position which is what will be iterated over) and assign it the value of position because forEach requires a position
+        todoLi.textContent = todoTextWithCompletion; // create a variable that includes the list item text with it's associated () or (x)
+        todoLi.appendChild(this.createDeleteButton()); //to each list item append a button (the button is created by calling a function which appears on this object which is why we use this)
+        todosUl.appendChild(todoLi); //append each list item to the unordered list
+    }, this); //this here is being used in the foreach callback function so that it is poiting to the view object, because it is not a method on the view object it is a parameter in the callback function
     },
     createDeleteButton: function() { 
       var deleteButton = document.createElement('button'); // variable that inserts the button onto the DOM
       deleteButton.textContent = ('Delete'); //text that appears on the button
-      deleteButton.className = "deleteButton";
-      return deleteButton;
+      deleteButton.className = 'deleteButton'; //create a variable for the className and assign it the value of 'deleteButton' 
+      return deleteButton; //return is used so that function doesn't return null
     },
   setUpEventListeners: function() {
-    var todosUl = document.querySelector('ul');
-      todosUl.addEventListener('click', function(event){
-
-      var elementClicked = event.target;
-        if (elementClicked.className ==='deleteButton') {
-          handlers.deleteTodo(parseInt(elementClicked.parentNode.id));
+    var todosUl = document.querySelector('ul'); // create a variable and assign it the value of the ul from the DOM
+      todosUl.addEventListener('click', function(event){ //addEventListener is a callback function, it takes the event (a click) and a function. 
+      var elementClicked = event.target; //the function takes a mouse event as a parameter (here where the mouse was clicked). This mouse click was assigned to the variable element clicked 
+        if (elementClicked.className ==='deleteButton') { //if what was clicked has the className deleteButton as previously assigned in the deletebutton function
+          handlers.deleteTodo(parseInt(elementClicked.parentNode.id)); //then we call the deleteTodo function on the handlers object and call the parseInt function (which takes a string, the ide of the element clicked, and converts it into a number because delete function requires an int)
         }
       });
     }
