@@ -8,34 +8,34 @@ var todoList = {
         completed: false //completed property default set to false
       });
     },
-    changeTodo: function(position, todoText) { //to change take the indext postion in the array and change the text property
-      this.todos[position].todoText = todoText;
+    changeTodo: function(position, todoText) { 
+      this.todos[position].todoText = todoText; //take the index postion in the array and change the text property at that index
     },
-    deleteTodo: function(position) { //to delete splice the array by chosing start postion of splice and how many to cut out (in this case only one)
-      this.todos.splice(position, 1);
+    deleteTodo: function(position) { 
+      this.todos.splice(position, 1);//to delete, splice the array by chosing start postion of splice and how many to cut out (in this case only one)
     },
-    toggleCompleted: function(position) { //to toggle completed modify the completed boolean propety value
+    toggleCompleted: function(position) { //to toggle completed, modify the completed boolean propety value
       var todo = this.todos[position]; // index position of the list item to be toggled
       todo.completed = !todo.completed; //switch statement if completed then set to not and vise versa
     },
     toggleAll: function() {
       var totalTodos = this.todos.length; // to get all todos get the array length
       var completedTodos = 0; //start loop by setting start value to check against 
-      this.todos.forEach(function(todo) { //forEach callback function being used in toggle all higher order function
-          if (todo.completed === true) {
-            completedTodos++;
+      this.todos.forEach(function(todo) { //forEach callback function being used in toggleAll higher order function
+          if (todo.completed === true) { //change completed property to true
+            completedTodos++; // if true add to the loop as complete until you reach the loop end (the array length)
           }
-        });
-      this.todos.forEach(function(todo){
-        if (completedTodos === totalTodos) {
-          todo.completed = false;
+        }); 
+      this.todos.forEach(function(todo){ 
+        if (completedTodos === totalTodos) { //loop through each todoList item until the totalTodos (the array length) is reached
+          todo.completed = false; // assign the value of false to each todoList item
         } else {
-          todo.completed = true;
+          todo.completed = true; // assign the value of true to each todoList item
         }
       });
     }
   };
-  // DOM handling events object
+  // DOM handling events object (the functions used in your HTML)
   var handlers = {
     addTodo: function() {
       var addTodoTextInput = document.getElementById('addTodoTextInput');
@@ -44,12 +44,12 @@ var todoList = {
       view.displayTodos();
     },
     changeTodo: function() {
-      var changeTodoPositionInput = document.getElementById('changeTodoPositionInput');
-      var changeTodoTextInput = document.getElementById('changeTodoTextInput');
-      todoList.changeTodo(changeTodoPositionInput.valueAsNumber, changeTodoTextInput.value);
-      changeTodoPositionInput.value = '';
+      var changeTodoPositionInput = document.getElementById('changeTodoPositionInput'); // create variables which will be used in the changeTodo function (this function requires tow parameters the vaiables breated are those two parameters)
+      var changeTodoTextInput = document.getElementById('changeTodoTextInput'); //those variables are given the value of the id created in the HTML accessed via the getElementById method
+      todoList.changeTodo(changeTodoPositionInput.valueAsNumber, changeTodoTextInput.value); // call changeTodoText function which is on the todoList object
+      changeTodoPositionInput.value = ''; //clear the input box in HTML after each use by setting to empty string after use
       changeTodoTextInput.value = '';
-      view.displayTodos();
+      view.displayTodos(); // call displayTodos function from the view object
     },
     deleteTodo: function(position) {
       todoList.deleteTodo(position);
@@ -107,6 +107,6 @@ var todoList = {
     }
   };
 
-  view.setUpEventListeners();
+  view.setUpEventListeners(); // call the setUpEventListeners function on the view object outside of the object
  
   

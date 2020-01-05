@@ -5,11 +5,14 @@
 </head>
   <body>
     <h1>Todo List</h1>
-
+<!--- divs serve to chunk up your data, each one deals with something different. 
+  Button listens for onclick behaviour to which handlers class is assigned which calls the .function. 
+  Between the tags is what appears on the button-->
     <div>
       <button onclick="handlers.toggleAll()">Toggle All</button>
     </div>
-    
+  <!--- input takes input form the user, it only takes the specified type
+  to have access in your JS you need to give it an id, this id a unique identifier-->  
     <div>
       <button onclick="handlers.addTodo()">Add</button>
       <input id="addTodoTextInput" type="text">
@@ -20,7 +23,7 @@
       <input id="changeTodoPositionInput" type="number">
       <input id="changeTodoTextInput" type="text">
     </div>
-    
+
     <div>
       <button onclick="handlers.toggleCompleted()">Toggle Completed</button>
       <input id="toggleCompletedPositionInput" type="number">
