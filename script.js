@@ -38,10 +38,10 @@ var todoList = {
   // DOM handling events object (the functions used in your HTML)
   var handlers = {
     addTodo: function() {
-      var addTodoTextInput = document.getElementById('addTodoTextInput');
-      todoList.addTodo(addTodoTextInput.value);
-      addTodoTextInput.value = '';
-      view.displayTodos();
+      var addTodoTextInput = document.getElementById('addTodoTextInput'); //document is accesssing the DOM using the getElementById method and assiging it to addTodoTextInput varaible
+      todoList.addTodo(addTodoTextInput.value); //access todoList object, call the addTodo method on it with the addTodoTextInput variable (be suere to make that variable a value) as a parameter
+      addTodoTextInput.value = ''; //after use, clear contents
+      view.displayTodos(); //render any changes to screen after each DOM event
     },
     changeTodo: function() {
       var changeTodoPositionInput = document.getElementById('changeTodoPositionInput'); // create variables which will be used in the changeTodo function (this function requires tow parameters the vaiables breated are those two parameters)
@@ -51,18 +51,18 @@ var todoList = {
       changeTodoTextInput.value = '';
       view.displayTodos(); // call displayTodos function from the view object
     },
-    deleteTodo: function(position) {
-      todoList.deleteTodo(position);
+    deleteTodo: function(position) { //though this doesn't appear as a button on the main app, it is a function that is used on it, we have now created individual buttons per list item
+      todoList.deleteTodo(position); // this function is also later called in the view object, deleting this function from here prevents the individual delete buttons from working
       view.displayTodos();
-    },
+    }, 
     toggleCompleted: function() {
-      var toggleCompletedPositionInput = document.getElementById('toggleCompletedPositionInput');
-      todoList.toggleCompleted(toggleCompletedPositionInput.valueAsNumber);
+      var toggleCompletedPositionInput = document.getElementById('toggleCompletedPositionInput'); //as above, create a variable and assign it the value of the DOM id
+      todoList.toggleCompleted(toggleCompletedPositionInput.valueAsNumber); // call the toggleCompleted function on the todoList object passing it in the toggleCompletedPositionInput variable but make sure it's a number as the parameter
       toggleCompletedPositionInput.value = '';
       view.displayTodos();
     },
     toggleAll: function() {
-      todoList.toggleAll();
+      todoList.toggleAll(); // call the toggleAll function on the todoList object, this function doesn't take any parameters
       view.displayTodos();
     }  
   };
